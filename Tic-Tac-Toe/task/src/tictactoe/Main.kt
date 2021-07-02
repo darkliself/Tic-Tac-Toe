@@ -2,9 +2,14 @@ package tictactoe
 
 import java.lang.NumberFormatException
 
+const val FIRST_PLAYER = "X"
+const val SECOND_PLAYER = "O"
+
+var turn = SECOND_PLAYER
+
 fun main() {
     print("Enter cells: ")
-    var enterCells = readLine()!!
+    var enterCells = "_________"
     println(enterCells)
     var state = 1
     drawField(enterCells)
@@ -20,7 +25,7 @@ fun main() {
     println(enterCells)
 
     drawField(enterCells)
-    //drawField(enterCells)
+    gameIsEnded("_________")
 }
 
 
@@ -42,20 +47,16 @@ fun drawField(patten: String) {
 fun makeMove(coordinates: String, enterCells: String): String {
     val (a, b) = coordinates.split(" ")
     val position = (a.toInt() - 1) * 3 + b.toInt()
-
-    //println(enterCells.substring(0, position - 1) + "X" + enterCells.substring(position, enterCells.count()))
-    return enterCells.substring(0, position - 1) + "X" + enterCells.substring(position, enterCells.count())
-
+    if (turn == FIRST_PLAYER) turn = SECOND_PLAYER
+    else turn = FIRST_PLAYER
+    return enterCells.substring(0, position - 1) + turn + enterCells.substring(position, enterCells.count())
 }
 
 fun checkMove(coordinates: String, currentMoves: String): Boolean {
     val xy = mutableListOf<Int>()
     try {
         coordinates.split(" ").forEach {
-
             xy.add(it.toInt())
-            //x = b.toInt()
-
         }
     } catch (e: NumberFormatException) {
         println("You should enter numbers!")
@@ -74,6 +75,9 @@ fun checkMove(coordinates: String, currentMoves: String): Boolean {
     }
 }
 
+fun gameIsEnded(cells: String) {
+    println(cells)
+}
 
 
 
