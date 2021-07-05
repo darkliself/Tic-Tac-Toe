@@ -75,6 +75,7 @@ fun checkMove(coordinates: String, currentMoves: String): Boolean {
             false
         } else {
             true
+
         }
     }
 }
