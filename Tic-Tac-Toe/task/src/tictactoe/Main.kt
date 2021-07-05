@@ -10,21 +10,25 @@ var turn = SECOND_PLAYER
 fun main() {
     print("Enter cells: ")
     var enterCells = "_________"
+    var testCells = "X__X__X__"
+    drawField(testCells)
+    gameIsEnded(testCells)
     println(enterCells)
-    var state = 1
     drawField(enterCells)
-
+    var state = 1
     while (state != 0) {
         println("Enter the coordinates: ")
         val coordinates = readLine()!!
         if (checkMove(coordinates, enterCells)) {
             enterCells = makeMove(coordinates,enterCells)
-            state = 0
-        }
-    }
-    println(enterCells)
 
-    drawField(enterCells)
+        }
+        println(enterCells)
+        drawField(enterCells)
+    }
+
+
+
     gameIsEnded("_________")
 }
 
@@ -62,7 +66,7 @@ fun checkMove(coordinates: String, currentMoves: String): Boolean {
         println("You should enter numbers!")
         return false
     }
-    return if (xy.any { it > 3 || it < 1 }) {
+    return if (xy.any { it > 3 || it < 1 } || xy.count() < 2) {
         println("Coordinates should be from 1 to 3!")
         false
     } else {
@@ -75,8 +79,29 @@ fun checkMove(coordinates: String, currentMoves: String): Boolean {
     }
 }
 
-fun gameIsEnded(cells: String) {
-    println(cells)
+fun gameIsEnded(cells: String): Boolean {
+    for (i in 0..8 step 3) {
+        if (cells[i + 0] == cells[i + 1] && cells[i + 1] == cells[i + 2] && cells[i + 0] != '_') {
+            println(cells[i + 0] + " " + i)
+
+        }
+    }
+    for (i in 0..2) {
+        println(cells[i * 3] + " ")
+        println(cells[i * 3] + " ")
+        println(cells[i * 3] + " ")
+        if (cells[i * 3] == cells[i * 3 + 1] && cells[i * 3 + 1] == cells[i * 3 + 2]) {
+            println("this is fours case")
+        }
+    }
+    if (cells[0] == cells[4] && cells[4] == cells[8]) {
+        println("Second Case")
+    }
+    if (cells[2] == cells[4] && cells[4] == cells[6]) {
+        println("Third Case")
+    }
+
+    return false
 }
 
 
