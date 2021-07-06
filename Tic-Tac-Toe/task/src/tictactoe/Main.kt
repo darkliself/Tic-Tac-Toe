@@ -8,27 +8,35 @@ const val SECOND_PLAYER = "O"
 var turn = SECOND_PLAYER
 
 fun main() {
-    print("Enter cells: ")
+    //print("Enter cells: ")
     var enterCells = "_________"
-    var testCells = "X__X__X__"
-    drawField(testCells)
-    gameIsEnded(testCells)
-    println(enterCells)
+    //println(enterCells)
     drawField(enterCells)
-    var state = 1
-    while (state != 0) {
+    var ended = false
+    while (!ended) {
         println("Enter the coordinates: ")
         val coordinates = readLine()!!
         if (checkMove(coordinates, enterCells)) {
             enterCells = makeMove(coordinates,enterCells)
-
         }
         println(enterCells)
         drawField(enterCells)
+        if (gameIsEnded(enterCells) == 1) {
+            println("$turn wins")
+            ended = true
+        }
+        when (gameIsEnded(enterCells)) {
+            1 ->  {
+                println("$turn wins")
+                ended = true
+            }
+            0 -> {
+                println("its draw")
+                ended = true
+            }
+        }
+
     }
-
-
-
     gameIsEnded("_________")
 }
 
@@ -56,6 +64,7 @@ fun makeMove(coordinates: String, enterCells: String): String {
     return enterCells.substring(0, position - 1) + turn + enterCells.substring(position, enterCells.count())
 }
 
+
 fun checkMove(coordinates: String, currentMoves: String): Boolean {
     val xy = mutableListOf<Int>()
     try {
@@ -80,29 +89,30 @@ fun checkMove(coordinates: String, currentMoves: String): Boolean {
     }
 }
 
-fun gameIsEnded(cells: String): Boolean {
+fun gameIsEnded(cells: String): Int {
     for (i in 0..8 step 3) {
         if (cells[i + 0] == cells[i + 1] && cells[i + 1] == cells[i + 2] && cells[i + 0] != '_') {
-            println(cells[i + 0] + " " + i)
-
+            return 1
         }
     }
     for (i in 0..2) {
-        println(cells[i * 3] + " ")
-        println(cells[i * 3] + " ")
-        println(cells[i * 3] + " ")
-        if (cells[i * 3] == cells[i * 3 + 1] && cells[i * 3 + 1] == cells[i * 3 + 2]) {
-            println("this is fours case")
+        if (cells[i] == cells[i + 3] && cells[i + 3] == cells[i + 6] && cells[i] != '_') {
+            // println("this is fours case")
+            return 1
         }
     }
-    if (cells[0] == cells[4] && cells[4] == cells[8]) {
-        println("Second Case")
+    if (cells[0] == cells[4] && cells[4] == cells[8] && cells[0] != '_') {
+        // println("Second Case")
+        return 1
     }
-    if (cells[2] == cells[4] && cells[4] == cells[6]) {
-        println("Third Case")
+    if (cells[2] == cells[4] && cells[4] == cells[6] && cells[2] != '_') {
+        // println("Third Case")
+        return 1
     }
-
-    return false
+    if (cells.count{ it == 'X' || it == 'O'} > 8) {
+        return 0
+    }
+    return 2
 }
 
 
