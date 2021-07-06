@@ -8,9 +8,7 @@ const val SECOND_PLAYER = "O"
 var turn = SECOND_PLAYER
 
 fun main() {
-    //print("Enter cells: ")
     var enterCells = "_________"
-    //println(enterCells)
     drawField(enterCells)
     var ended = false
     while (!ended) {
