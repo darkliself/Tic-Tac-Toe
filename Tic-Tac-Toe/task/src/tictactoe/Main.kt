@@ -33,11 +33,9 @@ fun main() {
                 ended = true
             }
         }
-
     }
     gameIsEnded("_________")
 }
-
 
 fun drawField(patten: String) {
     println("---------")
@@ -61,7 +59,6 @@ fun makeMove(coordinates: String, enterCells: String): String {
     else turn = FIRST_PLAYER
     return enterCells.substring(0, position - 1) + turn + enterCells.substring(position, enterCells.count())
 }
-
 
 fun checkMove(coordinates: String, currentMoves: String): Boolean {
     val xy = mutableListOf<Int>()
